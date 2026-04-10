@@ -140,11 +140,14 @@ with tab_protocol:
     """)
     st.info("Protocollo validato su dataset IRCCS per il monitoraggio continuo h24.")
 
-# --- Footer ---
+# --- Footer Section con Link Ufficiale ---
 st.divider()
-st.markdown("""
-<div style='text-align: center; color: #333333; font-size: 10px; letter-spacing: 0.05rem;'>
-NEUROCORE ENGINE v2.0 | COMPUTATIONAL NEUROSCIENCE UNIT | D. L. NICOLETTI <br>
-PROPRIETARY STABILITY ALGORITHM | CROSS-DOMAIN VALIDATED
+st.markdown(f"""
+<div style='text-align: center; color: #333333; font-size: 10px; letter-spacing: 0.05rem; line-height: 1.6;'>
+    NEUROCORE ENGINE v1.5.0 | COMPUTATIONAL NEURO-STABILITY UNIT | D. L. NICOLETTI <br>
+    <a href='https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/' style='color: #555555; text-decoration: none;'>
+        ACCESS DEPLOYED INSTANCE: neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app
+    </a> <br>
+    PROPRIETARY STABILITY ALGORITHM | CROSS-DOMAIN VALIDATED | BUILD 6d59bd8d
 </div>
 """, unsafe_allow_html=True)
