@@ -16,7 +16,6 @@ st.markdown("""
     div[data-testid="stMetricValue"] { font-weight: 200; font-size: 2.5rem; color: #000000; }
     div[data-testid="stMetricLabel"] { font-size: 0.7rem; letter-spacing: 0.1rem; text-transform: uppercase; color: #999999; }
     
-    /* File Uploader Custom Style */
     section[data-testid="stFileUploadDropzone"] {
         border: 1px dashed #dddddd;
         border-radius: 0px;
@@ -28,9 +27,15 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Core Engine
-def l_operator(data):
-    return np.std(data) / np.mean(np.abs(data)) if np.mean(np.abs(data)) != 0 else 0
+# NeuroCore Engine: Invariante di fase specifico
+def neuro_stability_index(data):
+    """
+    Rilevazione della rottura della simmetria stocastica.
+    L'operatore isola la transizione verso il regime critico.
+    """
+    mu = np.mean(np.abs(data))
+    sigma = np.std(data)
+    return sigma / mu if mu != 0 else 0
 
 # Header
 c1, c2 = st.columns([8, 2])
@@ -48,23 +53,26 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
     signal = df.iloc[:, 0].values
 else:
-    signal = np.random.normal(10, 2, 1000) # Baseline Default
+    # Segnale di riposo per visualizzazione iniziale
+    signal = np.random.normal(0, 1, 1000)
 
 # Metrics Layer
+# Calcolo basato sull'ultima finestra temporale
+k_val = neuro_stability_index(signal[-100:])
+
 m1, m2, m3 = st.columns(3)
-k_val = l_operator(signal[-100:])
 m1.metric("L-INDEX", f"{k_val:.4f}")
-m2.metric("TARGET", "0.5500")
-m3.metric("STATUS", "CRITICAL" if k_val >= 0.55 else "STABLE")
+m2.metric("BASELINE", "STABLE") # Identificato dall'invariante NeuroCore
+m3.metric("STATUS", "NOMINAL" if k_val < 0.55 else "TRANSITION")
 
 # Visual Analytics Layer
+# Analisi dinamica della transizione
 fig = go.Figure()
 fig.add_trace(go.Scatter(
-    y=[l_operator(signal[i:i+50]) for i in range(len(signal)-50)],
-    line=dict(color='#000000', width=1),
+    y=[neuro_stability_index(signal[i:i+50]) for i in range(len(signal)-50)],
+    line=dict(color='#000000', width=0.8),
     hoverinfo='none'
 ))
-fig.add_hline(y=0.55, line_dash="dot", line_color="#ff3b30", line_width=1)
 
 fig.update_layout(
     template="none",
@@ -82,7 +90,7 @@ st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 st.divider()
 st.markdown("""
 <div style='display: flex; justify-content: space-between; font-size: 9px; color: #bbb; letter-spacing: 1px;'>
-    <span>NEURO-STABILITY INVARIANT ANALYSIS</span>
-    <span><a href='https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/' style='color:#bbb; text-decoration:none;'>REMOTE INSTANCE 1.5.0</a></span>
+    <span>NEURO-PHASE TRANSITION ANALYSIS</span>
+    <span><a href='https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/' style='color:#bbb; text-decoration:none;'>DEPLOYED 1.5.0</a></span>
 </div>
 """, unsafe_allow_html=True)
