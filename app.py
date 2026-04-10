@@ -130,13 +130,20 @@ with tab_live:
 
 with tab_protocol:
     st.markdown("### Computational Framework")
-    st.write("""
-    **NeuroCore™** opera sulla topologia del segnale neurale. Non analizza la frequenza, 
-    ma la **stabilità strutturale** attraverso l'operatore L. 
+    # Inserimento della tua stringa scientifica ad alto livello
+    st.markdown(f"""
+    <div style="border-left: 2px solid #333; padding-left: 20px; margin: 20px 0; color: #aaaaaa; font-size: 15px; line-height: 1.7;">
+        <b>NeuroCore™</b> isola l'ancora omeostatica ($L_i \\approx 0.55$). 
+        La rottura di questa simmetria ($\Delta L > 0$) permette di prevedere 
+        shift cognitivi o eventi ictali con precisione elevata. 
+    </div>
+    """, unsafe_allow_html=True)
     
-    Utilizzando la **Teoria della Percolazione**, il sistema identifica il momento in cui 
-    micro-fluttuazioni isolate si connettono in un cluster critico, permettendo una 
-    capacità predittiva (EWLT) di 18.5 minuti prima dell'evento macroscopico.
+    st.write("""
+    Il sistema opera sulla topologia del segnale neurale attraverso l'operatore L. 
+    Utilizzando la **Teoria della Percolazione**, il framework identifica il momento in cui 
+    micro-fluttuazioni isolate si connettono in un cluster critico, garantendo una 
+    capacità predittiva (EWLT) di 18.5 minuti.
     """)
     st.info("Protocollo validato su dataset IRCCS per il monitoraggio continuo h24.")
 
