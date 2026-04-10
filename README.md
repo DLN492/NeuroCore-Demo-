@@ -1,4 +1,5 @@
-# 🧠 NeuroCore™ Engine (v1.5.0)
+# DEMO
+🧠 NeuroCore™ Engine (v1.5.0)
 ### Invariant-Based Stability Metric for Cross-Dataset Analysis
 
 [![License: Proprietary](https://img.shields.io/badge/License-SIAE%20Registered-red.svg)](https://www.siae.it/)
