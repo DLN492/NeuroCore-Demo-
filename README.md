@@ -9,11 +9,8 @@
 **NeuroCore™** è un framework computazionale ad alte prestazioni progettato per analizzare la stabilità neuro-funzionale e rilevare transizioni di regime in sistemi dinamici ad alta entropia.
 
 
----
-**Build:** 6d59bd8d  
-**Version:** 1.5.0
+  [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/)
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)]([IL_TUO_LINK_QUI](https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/))
 
 ---
 
