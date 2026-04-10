@@ -14,7 +14,7 @@
 
 ---
 
-## 🔬 Core Science: The 0.55 Invariant
+## 🔬 Core Science
 Il modello introduce l'**Invariante Homeostatic 0.55**, identificato tramite l'Operatore Asintotico L. Questo parametro funge da attrattore stabile per l'organizzazione funzionale attraverso dataset eterogenei.
 
 ### Key Metrics
@@ -24,12 +24,11 @@ Il modello introduce l'**Invariante Homeostatic 0.55**, identificato tramite l'O
 
 ---
 
-## ⚡ The Vision
-Mentre i modelli tradizionali si perdono nel rumore dei biosegnali, **NeuroCore™** isola l'ancora omeostatica ($L_i \approx 0.55$). La rottura di questa simmetria ($\Delta L > 0$) permette di prevedere shift cognitivi o eventi ictali con una precisione senza precedenti.
+**NeuroCore™** isola l'ancora omeostatica ($L_i \approx 0.55$). La rottura di questa simmetria ($\Delta L > 0$) permette di prevedere shift cognitivi o eventi ictali.
 
 ---
 
 ## 🛡️ Intellectual Property
 **Author:** Davide Luca Nicoletti  
-**Digital Signature:** Registered under SIAE n. 2026/00008  
+**Digital Signature:** Registered  under SIAE n. 2026/00008  
 **Build Integrity:** SHA-256 `6d59bd8d8f4c89ffb4d140f5b89c664798701b4cac8ae373aaaa71540a459116`
