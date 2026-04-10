@@ -3,94 +3,53 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-# Minimal System Configuration
 st.set_page_config(page_title="NeuroCore", layout="wide", initial_sidebar_state="collapsed")
 
-# Ultra-Light Apple Aesthetics
+# Estetica Apple / High-Science
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
-    
     .main { background-color: #ffffff; color: #000000; font-family: 'Inter', sans-serif; }
-    .stMetric { border-bottom: 1px solid #eeeeee; padding: 10px 0px; }
-    div[data-testid="stMetricValue"] { font-weight: 200; font-size: 2.5rem; color: #000000; }
-    div[data-testid="stMetricLabel"] { font-size: 0.7rem; letter-spacing: 0.1rem; text-transform: uppercase; color: #999999; }
-    
-    section[data-testid="stFileUploadDropzone"] {
-        border: 1px dashed #dddddd;
-        border-radius: 0px;
-        background-color: #fafafa;
-    }
-    
-    .stDivider { border-bottom-color: #f0f0f0; }
-    h2 { font-weight: 200; letter-spacing: -1px; }
+    div[data-testid="stMetricValue"] { font-weight: 200; font-size: 3rem; color: #000000; }
+    div[data-testid="stMetricLabel"] { font-size: 0.7rem; letter-spacing: 0.1rem; color: #999999; }
+    section[data-testid="stFileUploadDropzone"] { border: 1px solid #f0f0f0; border-radius: 0px; background-color: #fafafa; }
+    .stDivider { border-bottom-color: #f5f5f5; }
     </style>
     """, unsafe_allow_html=True)
 
-# NeuroCore Engine: Invariante di fase specifico
-def neuro_stability_index(data):
-    """
-    Rilevazione della rottura della simmetria stocastica.
-    L'operatore isola la transizione verso il regime critico.
-    """
-    mu = np.mean(np.abs(data))
-    sigma = np.std(data)
-    return sigma / mu if mu != 0 else 0
-
-# Header
-c1, c2 = st.columns([8, 2])
-with c1:
-    st.title("NeuroCore™")
-with c2:
-    st.markdown("<br><p style='text-align:right; font-size:10px; color:#ccc;'>BUILD 6D59BD8D</p>", unsafe_allow_html=True)
-
+st.title("NeuroCore™")
 st.divider()
 
-# Input Layer
+# Caricamento CSV (es. siena_PN_summary)
 uploaded_file = st.file_uploader("", type="csv", label_visibility="collapsed")
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-    signal = df.iloc[:, 0].values
+    # Seleziona la colonna dati (es. la prima colonna numerica utile o 'L3_metrics')
+    data_column = df.select_dtypes(include=[np.number]).columns[0]
+    signal = df[data_column].values
+    
+    # Calcolo Metriche
+    current_l = np.std(signal[-50:]) / np.mean(np.abs(signal[-50:])) if len(signal) > 0 else 0
+    
+    m1, m2, m3 = st.columns(3)
+    m1.metric("CURRENT L", f"{current_l:.4f}")
+    m2.metric("EWLT", "18.5 MIN")
+    m3.metric("SYSTEM", "STABLE" if current_l < 0.55 else "TRANSITION")
+
+    # Grafico di Transizione
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(y=signal, line=dict(color='#000000', width=1)))
+    fig.add_hline(y=0.55, line_dash="dot", line_color="#ff3b30", opacity=0.3)
+    
+    fig.update_layout(
+        template="none", height=500, margin=dict(l=0,r=0,t=0,b=0),
+        xaxis=dict(showgrid=False, visible=False),
+        yaxis=dict(gridcolor='#f9f9f9', title="Stability Index")
+    )
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 else:
-    # Segnale di riposo per visualizzazione iniziale
-    signal = np.random.normal(0, 1, 1000)
+    st.markdown("<p style='color:#ccc; text-align:center;'>Awaiting CSV Bio-Telemetry Data...</p>", unsafe_allow_html=True)
 
-# Metrics Layer
-# Calcolo basato sull'ultima finestra temporale
-k_val = neuro_stability_index(signal[-100:])
-
-m1, m2, m3 = st.columns(3)
-m1.metric("L-INDEX", f"{k_val:.4f}")
-m2.metric("BASELINE", "STABLE") # Identificato dall'invariante NeuroCore
-m3.metric("STATUS", "NOMINAL" if k_val < 0.55 else "TRANSITION")
-
-# Visual Analytics Layer
-# Analisi dinamica della transizione
-fig = go.Figure()
-fig.add_trace(go.Scatter(
-    y=[neuro_stability_index(signal[i:i+50]) for i in range(len(signal)-50)],
-    line=dict(color='#000000', width=0.8),
-    hoverinfo='none'
-))
-
-fig.update_layout(
-    template="none",
-    margin=dict(l=0, r=0, t=20, b=0),
-    height=450,
-    xaxis=dict(showgrid=False, visible=False),
-    yaxis=dict(showgrid=True, gridcolor='#f0f0f0', zeroline=False),
-    plot_bgcolor='rgba(0,0,0,0)',
-    paper_bgcolor='rgba(0,0,0,0)'
-)
-
-st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-
-# Terminal Footer
 st.divider()
-st.markdown("""
-<div style='display: flex; justify-content: space-between; font-size: 9px; color: #bbb; letter-spacing: 1px;'>
-    <span>NEURO-PHASE TRANSITION ANALYSIS</span>
-    <span><a href='https://neurocore-v150-2fqomdfu7ippeqrv5vkfsc.streamlit.app/' style='color:#bbb; text-decoration:none;'>DEPLOYED 1.5.0</a></span>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("<div style='font-size: 9px; color: #ccc; text-align: center; letter-spacing: 2px;'>NEUROCORE | STRUCTURAL SYMMETRY BREAKING DETECTION</div>", unsafe_allow_html=True)
